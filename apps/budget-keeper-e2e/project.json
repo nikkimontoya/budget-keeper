@@ -1,0 +1,28 @@
+{
+  "root": "apps/budget-keeper-e2e",
+  "sourceRoot": "apps/budget-keeper-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/budget-keeper-e2e/cypress.json",
+        "devServerTarget": "budget-keeper:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "budget-keeper:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/budget-keeper-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["budget-keeper"]
+}

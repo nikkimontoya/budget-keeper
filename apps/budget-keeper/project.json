@@ -1,0 +1,97 @@
+{
+  "projectType": "application",
+  "root": "apps/budget-keeper",
+  "sourceRoot": "apps/budget-keeper/src",
+  "prefix": "budget-keeper",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/budget-keeper",
+        "index": "apps/budget-keeper/src/index.html",
+        "main": "apps/budget-keeper/src/main.ts",
+        "polyfills": "apps/budget-keeper/src/polyfills.ts",
+        "tsConfig": "apps/budget-keeper/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/budget-keeper/src/favicon.ico",
+          "apps/budget-keeper/src/assets"
+        ],
+        "styles": ["apps/budget-keeper/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/budget-keeper/src/environments/environment.ts",
+              "with": "apps/budget-keeper/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "budget-keeper:build:production"
+        },
+        "development": {
+          "browserTarget": "budget-keeper:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "proxyConfig": "apps/budget-keeper/proxy.conf.json"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "budget-keeper:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/budget-keeper/src/**/*.ts",
+          "apps/budget-keeper/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/budget-keeper"],
+      "options": {
+        "jestConfig": "apps/budget-keeper/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
