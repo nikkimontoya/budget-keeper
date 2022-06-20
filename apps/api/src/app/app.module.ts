@@ -1,11 +1,27 @@
-import { Module } from '@nestjs/common';
+import {Module} from '@nestjs/common';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import {AppController} from './app.controller';
+import {AppService} from './app.service';
+import {TypeOrmModule} from '@nestjs/typeorm';
+import {environment} from '../environments/environment';
+import {UserModule} from './user/user.module';
+import {GraphQLModule} from '@nestjs/graphql';
+import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
+import {join} from 'path';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+    imports: [
+        TypeOrmModule.forRoot({
+            ...environment.connection,
+            entities: []
+        }),
+        GraphQLModule.forRoot<ApolloDriverConfig>({
+            driver: ApolloDriver,
+            autoSchemaFile: join(process.cwd(), 'schema.gql')
+        }),
+        UserModule
+    ],
+    controllers: [AppController],
+    providers: [AppService]
 })
 export class AppModule {}

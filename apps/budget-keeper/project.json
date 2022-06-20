@@ -6,7 +6,9 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/budget-keeper",
         "index": "apps/budget-keeper/src/index.html",
@@ -18,7 +20,10 @@
           "apps/budget-keeper/src/favicon.ico",
           "apps/budget-keeper/src/assets"
         ],
-        "styles": ["apps/budget-keeper/src/styles.scss"],
+        "styles": [
+          "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+          "apps/budget-keeper/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -86,7 +91,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/budget-keeper"],
+      "outputs": [
+        "coverage/apps/budget-keeper"
+      ],
       "options": {
         "jestConfig": "apps/budget-keeper/jest.config.js",
         "passWithNoTests": true
