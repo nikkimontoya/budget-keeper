@@ -13,7 +13,7 @@ export class UserService {
         private jwtService: JwtService
     ) {}
 
-    async register(email: string, password: string, firstName = '', lastName = ''): Promise<UserEntity> {
+    async register(email: string, password: string, firstName = '', lastName = ''): Promise<LoginModel> {
         const salt = await genSalt(10);
 
         const newUser = this.userRepository.create({
@@ -23,7 +23,9 @@ export class UserService {
             lastName
         });
 
-        return this.userRepository.save(newUser);
+        const user = await this.userRepository.save(newUser);
+
+        return {...user, accessToken: await this.jwtService.signAsync({email})};
     }
 
     async login(email: string, password: string): Promise<LoginModel> {

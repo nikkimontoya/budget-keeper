@@ -9,8 +9,8 @@ import {LoginModel} from './models/login.model';
 export class UserResolver {
     constructor(private userService: UserService) {}
 
-    @Mutation((returns) => UserModel)
-    async register(@Args('data', {type: () => RegisterInput}) data: RegisterInput): Promise<UserEntity> {
+    @Mutation((returns) => LoginModel)
+    async register(@Args('data', {type: () => RegisterInput}) data: RegisterInput): Promise<LoginModel> {
         return this.userService.register(data.email, data.password, data.firstName, data.lastName);
     }
 
