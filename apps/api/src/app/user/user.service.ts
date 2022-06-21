@@ -1,12 +1,17 @@
-import {Injectable} from '@nestjs/common';
+import {BadRequestException, Injectable} from '@nestjs/common';
 import {Repository} from 'typeorm';
 import {UserEntity} from './entities/user.entity';
 import {InjectRepository} from '@nestjs/typeorm';
-import {genSalt, hash} from 'bcryptjs';
+import {compare, genSalt, hash} from 'bcryptjs';
+import {LoginModel} from './models/login.model';
+import {JwtService} from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
-    constructor(@InjectRepository(UserEntity) private userRepository: Repository<UserEntity>) {}
+    constructor(
+        @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
+        private jwtService: JwtService
+    ) {}
 
     async register(email: string, password: string, firstName = '', lastName = ''): Promise<UserEntity> {
         const salt = await genSalt(10);
@@ -19,6 +24,22 @@ export class UserService {
         });
 
         return this.userRepository.save(newUser);
+    }
+
+    async login(email: string, password: string): Promise<LoginModel> {
+        const user = await this.userRepository.findOneBy({email});
+
+        if (!user) {
+            throw new BadRequestException('Wrong credentials');
+        }
+
+        const passwordIsCorrect = await compare(password, user.passwordHash);
+
+        if (!passwordIsCorrect) {
+            throw new BadRequestException('Wrong credentials');
+        }
+
+        return {...user, accessToken: await this.jwtService.signAsync({email})};
     }
 
     async getAll(): Promise<UserEntity[]> {

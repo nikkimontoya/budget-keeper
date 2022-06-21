@@ -9,12 +9,21 @@ type UserModel {
   lastName: String
 }
 
+type LoginModel {
+  id: ID!
+  email: String!
+  firstName: String
+  lastName: String
+  accessToken: String!
+}
+
 type Query {
   users: [UserModel!]!
 }
 
 type Mutation {
   register(data: RegisterInput!): UserModel!
+  login(email: String!, password: String!): LoginModel!
 }
 
 input RegisterInput {
