@@ -2,11 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type CategoryModel {
+  id: ID!
+  name: String!
+  user: UserModel!
+}
+
 type UserModel {
   id: ID!
   email: String!
   firstName: String
   lastName: String
+  categories: [CategoryModel!]!
 }
 
 type LoginModel {
@@ -19,11 +26,13 @@ type LoginModel {
 
 type Query {
   users: [UserModel!]!
+  categories(ids: [ID!]!): [CategoryModel!]!
 }
 
 type Mutation {
-  register(data: RegisterInput!): UserModel!
+  register(data: RegisterInput!): LoginModel!
   login(email: String!, password: String!): LoginModel!
+  createCategory(name: String!, userId: ID!): CategoryModel!
 }
 
 input RegisterInput {

@@ -1,4 +1,5 @@
 import {Field, ID, ObjectType} from '@nestjs/graphql';
+import {CategoryModel} from '../../category/models/category.model';
 
 @ObjectType()
 export class UserModel {
@@ -13,4 +14,7 @@ export class UserModel {
 
     @Field({nullable: true})
     lastName: string;
+
+    @Field((type) => [CategoryModel])
+    categories: CategoryModel[];
 }
