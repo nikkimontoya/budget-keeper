@@ -1,5 +1,15 @@
-import {BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, RelationId} from 'typeorm';
+import {
+    BaseEntity,
+    Column,
+    Entity,
+    JoinTable,
+    ManyToMany,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    RelationId
+} from 'typeorm';
 import {CategoryEntity} from '../../category/entities/category.entity';
+import {SpendingBookEntity} from '../../spending-book/entities/spending-book.entity';
 
 @Entity({name: 'users'})
 export class UserEntity extends BaseEntity {
@@ -23,4 +33,21 @@ export class UserEntity extends BaseEntity {
 
     @RelationId((user: UserEntity) => user.categories)
     categoryIds: number[];
+
+    @ManyToMany(() => SpendingBookEntity)
+    @JoinTable({
+        name: 'users_spending_books',
+        inverseJoinColumn: {
+            name: 'spending_book_id',
+            referencedColumnName: 'id'
+        },
+        joinColumn: {
+            name: 'user_id',
+            referencedColumnName: 'id'
+        }
+    })
+    spendingBooks: SpendingBookEntity[];
+
+    @RelationId((user: UserEntity) => user.spendingBooks)
+    spendingBookIds: number[];
 }

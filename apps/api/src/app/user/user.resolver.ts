@@ -6,10 +6,16 @@ import {UserModel} from './models/user.model';
 import {LoginModel} from './models/login.model';
 import {CategoryEntity} from '../category/entities/category.entity';
 import {CategoryService} from '../category/category.service';
+import {SpendingBookEntity} from '../spending-book/entities/spending-book.entity';
+import {SpendingBookService} from '../spending-book/spending-book.service';
 
 @Resolver((of) => UserModel)
 export class UserResolver {
-    constructor(private userService: UserService, private categoryService: CategoryService) {}
+    constructor(
+        private userService: UserService,
+        private categoryService: CategoryService,
+        private bookService: SpendingBookService
+    ) {}
 
     @Mutation((returns) => LoginModel)
     async register(@Args('data', {type: () => RegisterInput}) data: RegisterInput): Promise<LoginModel> {
@@ -29,5 +35,13 @@ export class UserResolver {
     @ResolveField()
     async categories(@Parent() user: UserEntity): Promise<CategoryEntity[]> {
         return this.categoryService.getByUserId(user.id);
+    }
+
+    @ResolveField()
+    async spendingBooks(
+        @Parent() user: UserEntity,
+        @Args('personal', {type: () => Boolean, nullable: true}) personal?: boolean
+    ): Promise<SpendingBookEntity[]> {
+        return this.bookService.findByUserId(user.id, personal);
     }
 }

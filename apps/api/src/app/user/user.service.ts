@@ -1,5 +1,5 @@
 import {BadRequestException, Injectable} from '@nestjs/common';
-import {Repository} from 'typeorm';
+import {In, Repository} from 'typeorm';
 import {UserEntity} from './entities/user.entity';
 import {InjectRepository} from '@nestjs/typeorm';
 import {compare, genSalt, hash} from 'bcryptjs';
@@ -50,5 +50,9 @@ export class UserService {
 
     async getById(id: number): Promise<UserEntity> {
         return this.userRepository.findOneBy({id});
+    }
+
+    async getByIds(ids: number[]): Promise<UserEntity[]> {
+        return this.userRepository.findBy({id: In(ids)});
     }
 }

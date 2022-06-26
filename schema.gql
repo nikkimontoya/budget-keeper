@@ -8,12 +8,20 @@ type CategoryModel {
   user: UserModel!
 }
 
+type SpendingBookModel {
+  id: ID!
+  name: String!
+  users: [UserModel!]!
+  personal: Boolean!
+}
+
 type UserModel {
   id: ID!
   email: String!
   firstName: String
   lastName: String
   categories: [CategoryModel!]!
+  spendingBooks(personal: Boolean): [SpendingBookModel!]!
 }
 
 type LoginModel {
@@ -27,12 +35,14 @@ type LoginModel {
 type Query {
   users: [UserModel!]!
   categories(ids: [ID!]!): [CategoryModel!]!
+  spendingBooks(ids: [ID!]): [SpendingBookModel!]!
 }
 
 type Mutation {
   register(data: RegisterInput!): LoginModel!
   login(email: String!, password: String!): LoginModel!
   createCategory(name: String!, userId: ID!): CategoryModel!
+  createSpendingBook(name: String!, userIds: [ID!]!, personal: Boolean!): SpendingBookModel!
 }
 
 input RegisterInput {
