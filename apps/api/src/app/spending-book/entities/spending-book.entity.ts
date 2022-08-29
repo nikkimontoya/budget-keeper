@@ -1,5 +1,6 @@
-import {Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, RelationId} from 'typeorm';
+import {Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, RelationId} from 'typeorm';
 import {UserEntity} from '../../user/entities/user.entity';
+import {SpendingEntity} from '../../spending/entities/spending.entity';
 
 @Entity({name: 'spending_books'})
 export class SpendingBookEntity {
@@ -28,4 +29,10 @@ export class SpendingBookEntity {
 
     @Column()
     personal: boolean;
+
+    @OneToMany(() => SpendingEntity, (spending) => spending.spendingBook)
+    spendings: SpendingEntity[];
+
+    @RelationId((spendingBook: SpendingBookEntity) => spendingBook.spendings)
+    spendingIds: number[];
 }

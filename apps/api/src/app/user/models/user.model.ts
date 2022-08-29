@@ -5,7 +5,7 @@ import {SpendingBookModel} from '../../spending-book/models/spending-book.model'
 @ObjectType()
 export class UserModel {
     @Field((type) => ID)
-    id: number;
+    id: string;
 
     @Field()
     email: string;

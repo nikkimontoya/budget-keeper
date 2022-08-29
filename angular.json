@@ -1,9 +1,10 @@
 {
-  "version": 2,
-  "projects": {
-    "api": "apps/api",
-    "api-interfaces": "libs/api-interfaces",
-    "budget-keeper": "apps/budget-keeper",
-    "budget-keeper-e2e": "apps/budget-keeper-e2e"
-  }
+    "version": 2,
+    "projects": {
+        "api": "apps/api",
+        "api-interfaces": "libs/api-interfaces",
+        "budget-keeper": "apps/budget-keeper",
+        "budget-keeper-e2e": "apps/budget-keeper-e2e",
+        "utils": "libs/utils"
+    }
 }

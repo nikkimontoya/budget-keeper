@@ -7,7 +7,9 @@ import {GraphQLModule} from '@nestjs/graphql';
 import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
 import {join} from 'path';
 import {CategoryModule} from './category/category.module';
-import { SpendingBookModule } from './spending-book/spending-book.module';
+import {SpendingBookModule} from './spending-book/spending-book.module';
+import {SpendingModule} from './spending/spending.module';
+import {LocalDateScalar} from './scalars/local-date.scalar';
 
 @Module({
     imports: [
@@ -17,11 +19,15 @@ import { SpendingBookModule } from './spending-book/spending-book.module';
         }),
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
-            autoSchemaFile: join(process.cwd(), 'schema.gql')
+            autoSchemaFile: join(process.cwd(), 'schema.gql'),
+            resolvers: {
+                LocalDate: LocalDateScalar
+            }
         }),
         UserModule,
         CategoryModule,
-        SpendingBookModule
+        SpendingBookModule,
+        SpendingModule
     ]
 })
 export class AppModule {}

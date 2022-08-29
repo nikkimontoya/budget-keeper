@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
+    "@js-joda/core": "^5.2.0",
     "@nestjs/apollo": "^10.0.16",
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
