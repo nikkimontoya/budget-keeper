@@ -7,7 +7,11 @@ import {Repository} from 'typeorm';
 export class SpendingService {
     constructor(@InjectRepository(SpendingEntity) private spendingRepository: Repository<SpendingEntity>) {}
 
-    async findByUserId(userId: number): Promise<SpendingEntity[]> {
-        this.spendingRepository.findBy({});
+    async findByAuthorId(authorId: number): Promise<SpendingEntity[]> {
+        return this.spendingRepository.findBy({authorId: authorId});
+    }
+
+    async findAll(): Promise<SpendingEntity[]> {
+        return this.spendingRepository.find();
     }
 }
