@@ -32,10 +32,24 @@ type LoginModel {
   accessToken: String!
 }
 
+type SpendingModel {
+  id: ID!
+  title: String!
+  cost: Money!
+  date: LocalDate!
+}
+
+"""Money representation using custom Money class"""
+scalar Money
+
+"""JS Joda Local Date"""
+scalar LocalDate
+
 type Query {
   users: [UserModel!]!
   categories(ids: [ID!]!): [CategoryModel!]!
   spendingBooks(ids: [ID!]): [SpendingBookModel!]!
+  spendings: [SpendingModel!]!
 }
 
 type Mutation {
